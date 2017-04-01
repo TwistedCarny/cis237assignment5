@@ -11,7 +11,7 @@ namespace assignment1
 {
     class UserInterface
     {
-        const int maxMenuChoice = 5;
+        const int maxMenuChoice = 4;
         //---------------------------------------------------
         //Public Methods
         //---------------------------------------------------
@@ -19,7 +19,7 @@ namespace assignment1
         //Display Welcome Greeting
         public void DisplayWelcomeGreeting()
         {
-            Console.WriteLine("Welcome to the wine program");
+            Console.WriteLine("Welcome to the beverage program");
         }
 
         //Display Menu And Get Response
@@ -39,7 +39,7 @@ namespace assignment1
             while (!this.verifySelectionIsValid(selection))
             {
                 //display error message
-                this.displayErrorMessage();
+                this.DisplayErrorMessage();
 
                 //display the prompt again
                 this.displayPrompt();
@@ -55,7 +55,7 @@ namespace assignment1
         public string GetSearchQuery()
         {
             Console.WriteLine();
-            Console.WriteLine("What would you like to search for?");
+            Console.WriteLine("Enter the ID of the item you're looking for");
             Console.Write("> ");
             return Console.ReadLine();
         }
@@ -73,32 +73,21 @@ namespace assignment1
             Console.WriteLine("What is the new items Pack?");
             Console.Write("> ");
             string pack = Console.ReadLine();
+            Console.WriteLine("What is the new items Price?");
+            Console.Write("> ");
+            string price = Console.ReadLine();
+            Console.WriteLine("is the new item active? Y/N");
+            Console.Write("> ");
+            string active = Console.ReadLine();
 
-            return new string[] { id, description, pack };
-        }
-
-        //Display Import Success
-        public void DisplayImportSuccess()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Wine List Has Been Imported Successfully");
-        }
-
-        //Display Import Error
-        public void DisplayImportError()
-        {
-            Console.WriteLine();
-            Console.WriteLine("There was an error importing the CSV");
+            return new string[] { id, description, pack, price, active};
         }
 
         //Display All Items
-        public void DisplayAllItems(string[] allItemsOutput)
+        public void DisplayAllItems(string allItemsOutput)
         {
-            Console.WriteLine();
-            foreach (string itemOutput in allItemsOutput)
-            {
-                Console.WriteLine(itemOutput);
-            }
+            Console.WriteLine(allItemsOutput);
+            
         }
 
         //Display All Items Error
@@ -148,11 +137,10 @@ namespace assignment1
             Console.WriteLine();
             Console.WriteLine("What would you like to do?");
             Console.WriteLine();
-            Console.WriteLine("1. Load Wine List From CSV");
-            Console.WriteLine("2. Print The Entire List Of Items");
-            Console.WriteLine("3. Search For An Item");
-            Console.WriteLine("4. Add New Item To The List");
-            Console.WriteLine("5. Exit Program");
+            Console.WriteLine("1. Print The Entire List Of Items");
+            Console.WriteLine("2. Search For An Item");
+            Console.WriteLine("3. Add New Item To The List");
+            Console.WriteLine("4. Exit Program");
         }
 
         //Display the Prompt
@@ -163,7 +151,7 @@ namespace assignment1
         }
 
         //Display the Error Message
-        private void displayErrorMessage()
+        public void DisplayErrorMessage()
         {
             Console.WriteLine();
             Console.WriteLine("That is not a valid option. Please make a valid choice");
