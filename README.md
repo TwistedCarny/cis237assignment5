@@ -2,7 +2,7 @@
 
 ## Due 04-03-2017
 
-## Author
+## Author Westin Curtis
 
 ## Description
 
@@ -80,5 +80,6 @@ Solution Requirements:
 | Total                                   | 100    |
 
 ## Outside Resources Used
-
+None
 ## Known Problems, Issues, And/Or Errors in the Program
+None

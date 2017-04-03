@@ -1,14 +1,6 @@
-﻿//Author: David Barnes
+﻿//Author: Westin Curtis
 //CIS 237
-//Assignment 1
-/*
- * The Menu Choices Displayed By The UI
- * 1. Load Wine List From CSV
- * 2. Print The Entire List Of Items
- * 3. Search For An Item
- * 4. Add New Item To The List
- * 5. Exit Program
- */
+//Assignment 5
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +13,11 @@ namespace assignment1
     {
         static void Main(string[] args)
         {
-            //Set a constant for the size of the collection
-            const int wineItemCollectionSize = 4000;
-
-            //Set a constant for the path to the CSV File
-            const string pathToCSVFile = "../../../datafiles/winelist.csv";
 
             //Create an instance of the UserInterface class
             UserInterface userInterface = new UserInterface();
 
-            //Create an instance of the WineItemCollection class
+            //Create an instance of the BeverageRepository class
             BeverageRepository beverageRepository = new BeverageRepository();
 
 
@@ -41,7 +28,7 @@ namespace assignment1
             //This is the 'primer' run of displaying and getting.
             int choice = userInterface.DisplayMenuAndGetResponse();
 
-            while (choice != 4)
+            while (choice != 6)
             {
                 switch (choice)
                 {
@@ -85,13 +72,67 @@ namespace assignment1
 
                         if (beverageRepository.FindById(newItemInformation[0]) == null)
                         {
+
+                            try
+                            {
+                                beverageRepository.AddNewItem(newItemInformation[0], newItemInformation[1], newItemInformation[2], decimal.Parse(newItemInformation[3]), activeItem);
+                                userInterface.DisplayAddBeverageSuccess();
+                            }
+                            catch(FormatException ex)
+                            {
+                                userInterface.DisplayInvalidPriceInput();
+                            }    
                             
-                            beverageRepository.AddNewItem(newItemInformation[0], newItemInformation[1], newItemInformation[2], decimal.Parse(newItemInformation[3]), activeItem);
-                            userInterface.DisplayAddWineItemSuccess();
                         }
                         else
                         {
                             userInterface.DisplayItemAlreadyExistsError();
+                        }
+                        break;
+                    case 4:
+                        string[] updatedItemInformation = userInterface.GetUpdatedItemInformation();
+                        bool updatedActiveItem = false;
+                        if (updatedItemInformation[4].ToLower() == "y")
+                        {
+                            activeItem = true;
+                        }
+                        else if (updatedItemInformation[4].ToLower() == "n")
+                        {
+                            activeItem = false;
+                        }
+                        else
+                        {
+                            userInterface.DisplayErrorMessage();
+                            break;
+                        }
+
+                        if(beverageRepository.FindById(updatedItemInformation[0]) != null)
+                        {
+                            try
+                            {
+                                beverageRepository.UpdateItem(updatedItemInformation[0], updatedItemInformation[1], updatedItemInformation[2], decimal.Parse(updatedItemInformation[3]), updatedActiveItem);
+                                userInterface.DisplayAddBeverageSuccess();
+                            }
+                            catch (FormatException ex)
+                            {
+                                userInterface.DisplayInvalidPriceInput();
+                            }
+                        }
+                        else
+                        {
+                            userInterface.DisplayItemNotExist();
+                        }
+                        break;
+                    case 5:
+                        string id = userInterface.GetItemIDForDeletion();
+                        if (beverageRepository.FindById(id) != null)
+                        {
+                            beverageRepository.DeleteItem(id);
+                            userInterface.DisplaySuccessfullyDeletedItem();
+                        }
+                        else
+                        {
+                            userInterface.DisplayItemNotExist();
                         }
                         break;
                 }

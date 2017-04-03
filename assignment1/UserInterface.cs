@@ -1,6 +1,6 @@
-﻿//Author: David Barnes
+﻿//Author: Westin Curtis
 //CIS 237
-//Assignment 1
+//Assignment 5
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace assignment1
 {
     class UserInterface
     {
-        const int maxMenuChoice = 4;
+        const int maxMenuChoice = 6;
         //---------------------------------------------------
         //Public Methods
         //---------------------------------------------------
@@ -60,6 +60,14 @@ namespace assignment1
             return Console.ReadLine();
         }
 
+        public string GetItemIDForDeletion()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Enter the ID of the item you would like to delete.");
+            Console.Write("> ");
+            return Console.ReadLine();
+        }
+
         //Get New Item Information From The User.
         public string[] GetNewItemInformation()
         {
@@ -83,6 +91,28 @@ namespace assignment1
             return new string[] { id, description, pack, price, active};
         }
 
+        public string[] GetUpdatedItemInformation()
+        {
+            Console.WriteLine();
+            Console.WriteLine("What is the ID of the item you would like to update?");
+            Console.Write("> ");
+            string id = Console.ReadLine();
+            Console.WriteLine("What is the updated items Description?");
+            Console.Write("> ");
+            string description = Console.ReadLine();
+            Console.WriteLine("What is the updated items Pack?");
+            Console.Write("> ");
+            string pack = Console.ReadLine();
+            Console.WriteLine("What is the updated items Price?");
+            Console.Write("> ");
+            string price = Console.ReadLine();
+            Console.WriteLine("is the new updated active? Y/N");
+            Console.Write("> ");
+            string active = Console.ReadLine();
+
+            return new string[] { id, description, pack, price, active };
+        }
+
         //Display All Items
         public void DisplayAllItems(string allItemsOutput)
         {
@@ -90,11 +120,29 @@ namespace assignment1
             
         }
 
+        public void DisplaySuccessfullyDeletedItem()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Successfully deleted item from database.");
+        }
+
         //Display All Items Error
         public void DisplayAllItemsError()
         {
             Console.WriteLine();
             Console.WriteLine("There are no items in the list to print");
+        }
+
+        public void DisplayInvalidPriceInput()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Invalid price was input. Cannot add or update item in database.");
+        }
+
+        public void DisplayItemNotExist()
+        {
+            Console.WriteLine();
+            Console.Write("The ID of the item entered doesn't exist in the database.");
         }
 
         //Display Item Found Success
@@ -112,8 +160,8 @@ namespace assignment1
             Console.WriteLine("A Match was not found");
         }
 
-        //Display Add Wine Item Success
-        public void DisplayAddWineItemSuccess()
+        //Display Add Beverage Success
+        public void DisplayAddBeverageSuccess()
         {
             Console.WriteLine();
             Console.WriteLine("The Item was successfully added");
@@ -140,7 +188,9 @@ namespace assignment1
             Console.WriteLine("1. Print The Entire List Of Items");
             Console.WriteLine("2. Search For An Item");
             Console.WriteLine("3. Add New Item To The List");
-            Console.WriteLine("4. Exit Program");
+            Console.WriteLine("4. Update Item");
+            Console.WriteLine("5. Delete Item");
+            Console.WriteLine("6. Exit Program");
         }
 
         //Display the Prompt

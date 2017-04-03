@@ -1,6 +1,6 @@
-﻿//Author: David Barnes
+﻿//Author: Westin Curtis
 //CIS 237
-//Assignment 1
+//Assignment 5
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +20,10 @@ namespace assignment1
             beverageEntities = new BeverageWCurtisEntities();
         }
 
-        //Add a new item to the collection
+        //Add a new item to the database
         public void AddNewItem(string id, string description, string pack, decimal price, bool active)
         {
-            //Add a new WineItem to the collection. Increase the Length variable.
+            //Add a new Beverage to the database.
             Beverage beverage = new Beverage();
             beverage.id = id;
             beverage.name = description;
@@ -34,15 +34,45 @@ namespace assignment1
             beverageEntities.Beverages.Add(beverage);
             beverageEntities.SaveChanges();
         }
-        
+
+        // Update beverage in the database
+        public void UpdateItem(string id, string description, string pack, decimal price, bool active)
+        {
+            
+            Beverage beverage = SearchForBeverage(id);
+            if(beverage != null)
+            {
+                beverage.name = description;
+                beverage.pack = pack;
+                beverage.price = price;
+                beverage.active = active;
+
+                beverageEntities.SaveChanges();
+            }
+            
+        }
+
+        // Delete beverage from database
+        public void DeleteItem(string id)
+        {
+            Beverage beverage = SearchForBeverage(id);
+
+            beverageEntities.Beverages.Remove(beverage);
+
+            beverageEntities.SaveChanges();
+        }
+
         //Get The Print String Array For All Items
         public string GetPrintString()
         {
             string output = string.Empty;
 
-            foreach(Beverage beverage in beverageEntities.Beverages)
+            foreach (Beverage beverage in beverageEntities.Beverages)
             {
-                output += beverage.id + " " + beverage.name + " " + beverage.pack + " " + beverage.price + " " + beverage.active + Environment.NewLine;
+                output += "---------------------------------------------------------" + Environment.NewLine;
+                output += beverage.id + " " + beverage.name + " " +
+                     Environment.NewLine + beverage.pack + " " + beverage.price.ToString("C") + " " +  "Active: " + beverage.active + Environment.NewLine;
+                output += "---------------------------------------------------------" + Environment.NewLine;
             }
 
             return output;
@@ -54,22 +84,42 @@ namespace assignment1
             //Declare return string for the possible found item
             string returnString = null;
 
-            //For each WineItem in wineItems
+            //For each Beverage in Beverages
             foreach (Beverage beverage in beverageEntities.Beverages)
             {
-                //If the wineItem is not null
+                //If the Beverage is not null
                 if (beverage != null)
                 {
-                    //if the wineItem Id is the same as the search id
+                    //if the Beverage Id is the same as the search id
                     if (beverage.id == id)
                     {
-                        //Set the return string to the result of the wineItem's ToString method
+                        // Construct a string to return from the beverages properties
                         returnString = beverage.id + " " + beverage.name + " " + beverage.pack + " " + beverage.price + " " + beverage.active + Environment.NewLine;
                     }
                 }
             }
             //Return the returnString
             return returnString;
+        }
+
+        private Beverage SearchForBeverage(string id)
+        {
+
+            //For each Beverage in Beverages
+            foreach (Beverage beverage in beverageEntities.Beverages)
+            {
+                //If the Beverage is not null
+                if (beverage != null)
+                {
+                    //if the Beverage Id is the same as the search id
+                    if (beverage.id == id)
+                    {
+                        return beverage;
+                    }
+                }
+            }
+
+            return null;
         }
 
     }
