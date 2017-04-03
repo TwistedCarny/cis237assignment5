@@ -52,9 +52,11 @@ namespace assignment1
                         break;
 
                     case 3:
-                        //Add A New Item To The List
+                        //Add A New Item To The database
                         string[] newItemInformation = userInterface.GetNewItemInformation();
                         bool activeItem;
+
+                        // Check if they entered a "y" or "n", if not, display error message and break out of the process.
                         if(newItemInformation[4].ToLower() == "y")
                         {
                             activeItem = true;
@@ -70,6 +72,7 @@ namespace assignment1
                         }
                         
 
+                        // Check to make sure the that the id isn't in use
                         if (beverageRepository.FindById(newItemInformation[0]) == null)
                         {
 
@@ -78,7 +81,7 @@ namespace assignment1
                                 beverageRepository.AddNewItem(newItemInformation[0], newItemInformation[1], newItemInformation[2], decimal.Parse(newItemInformation[3]), activeItem);
                                 userInterface.DisplayAddBeverageSuccess();
                             }
-                            catch(FormatException ex)
+                            catch(FormatException ex) // Catch error when trying to parse the price
                             {
                                 userInterface.DisplayInvalidPriceInput();
                             }    
@@ -90,6 +93,8 @@ namespace assignment1
                         }
                         break;
                     case 4:
+
+                        // Update an item in the database
                         string[] updatedItemInformation = userInterface.GetUpdatedItemInformation();
                         bool updatedActiveItem = false;
                         if (updatedItemInformation[4].ToLower() == "y")
@@ -124,6 +129,7 @@ namespace assignment1
                         }
                         break;
                     case 5:
+                        // Delete item from database
                         string id = userInterface.GetItemIDForDeletion();
                         if (beverageRepository.FindById(id) != null)
                         {
