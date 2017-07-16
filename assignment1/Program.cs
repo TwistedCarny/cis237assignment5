@@ -40,7 +40,7 @@ namespace assignment1
                     case 2:
                         //Search For An Item
                         string searchQuery = userInterface.GetSearchQuery();
-                        string itemInformation = beverageRepository.FindById(searchQuery);
+                        string itemInformation = beverageRepository.GetBeverageInfo(searchQuery);
                         if (itemInformation != null)
                         {
                             userInterface.DisplayItemFound(itemInformation);
@@ -73,7 +73,7 @@ namespace assignment1
                         
 
                         // Check to make sure the that the id isn't in use
-                        if (beverageRepository.FindById(newItemInformation[0]) == null)
+                        if (beverageRepository.GetBeverageInfo(newItemInformation[0]) == null)
                         {
 
                             try
@@ -111,7 +111,7 @@ namespace assignment1
                             break;
                         }
 
-                        if(beverageRepository.FindById(updatedItemInformation[0]) != null)
+                        if(beverageRepository.GetBeverageInfo(updatedItemInformation[0]) != null)
                         {
                             try
                             {
@@ -131,7 +131,7 @@ namespace assignment1
                     case 5:
                         // Delete item from database
                         string id = userInterface.GetItemIDForDeletion();
-                        if (beverageRepository.FindById(id) != null)
+                        if (beverageRepository.GetBeverageInfo(id) != null)
                         {
                             beverageRepository.DeleteItem(id);
                             userInterface.DisplaySuccessfullyDeletedItem();

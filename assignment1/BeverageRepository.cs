@@ -79,47 +79,29 @@ namespace assignment1
         }
 
         //Find an item by it's Id
-        public string FindById(string id)
+        public string GetBeverageInfo(string id)
         {
             //Declare return string for the possible found item
             string returnString = null;
 
-            //For each Beverage in Beverages
-            foreach (Beverage beverage in beverageEntities.Beverages)
+            Beverage foundBeverage = SearchForBeverage(id);
+
+            if(foundBeverage != null)
             {
-                //If the Beverage is not null
-                if (beverage != null)
-                {
-                    //if the Beverage Id is the same as the search id
-                    if (beverage.id == id)
-                    {
-                        // Construct a string to return from the beverages properties
-                        returnString = beverage.id + " " + beverage.name + " " + beverage.pack + " " + beverage.price + " " + beverage.active + Environment.NewLine;
-                    }
-                }
+                // Construct a string to return from the beverages properties
+                returnString = foundBeverage.id + " " + foundBeverage.name + " " + foundBeverage.pack + " " + foundBeverage.price + " " + foundBeverage.active + Environment.NewLine;
             }
+
             //Return the returnString
             return returnString;
         }
 
         private Beverage SearchForBeverage(string id)
         {
+            Beverage foundBeverage = beverageEntities.Beverages.Find(id);
 
-            //For each Beverage in Beverages
-            foreach (Beverage beverage in beverageEntities.Beverages)
-            {
-                //If the Beverage is not null
-                if (beverage != null)
-                {
-                    //if the Beverage Id is the same as the search id
-                    if (beverage.id == id)
-                    {
-                        return beverage;
-                    }
-                }
-            }
-
-            return null;
+            return foundBeverage;
+            
         }
 
     }
